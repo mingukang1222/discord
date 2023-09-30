@@ -31,9 +31,7 @@ const { ai, organization } = require("../config.json");
 
 /*
 
-테스트 api : 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
-테스트 api : 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
-
+openai api token -> heroku
 
 */
 const axios = require("axios");
@@ -54,7 +52,7 @@ const runAPI = async (command, message) => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${ai}`,
+          Authorization: `Bearer ${process.env.OPENAI}`,
         },
       }
     )
