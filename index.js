@@ -71,4 +71,4 @@ client.on("messageCreate", (message) => {
   }
 });
 
-client.login(token[0] + token[1]);
+client.login(process.env.TOKEN);
