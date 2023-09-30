@@ -64,7 +64,7 @@ client.on("messageCreate", (message) => {
       case "예은아":
         ai.runAPI(subCommand, message);
         break;
-      case "테스트":
+      case "알라신님":
         ai.runAPI(subCommand, message);
         break;
     }
