@@ -1,0 +1,9 @@
+{
+  "token": "MTE1NTg1NDIyMDIyMjgwNDA2OA.G5-Fbu.VkKHmKirRgyIPRha-mtLvT3PYHS4q57OogoTvg",
+  "prefix": "!",
+  "mongooseConnectionString": "",
+  "ai": "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",
+  "organization": "org-HxpXqOTal8JJwF6psNM4gRxM",
+
+  "invite": "https://discord.com/api/oauth2/authorize?client_id=1155854220222804068&permissions=8&scope=bot"
+}
