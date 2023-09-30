@@ -44,7 +44,11 @@ const runAPI = async (command, message) => {
         messages: [
           {
             role: "user",
-            content: `${command}, 가능한 짧게 대답`,
+            content: `대답은 50자이내의 반말로 답변`,
+          },
+          {
+            role: "user",
+            content: `${command}`,
           },
         ],
         max_tokens: 150,
