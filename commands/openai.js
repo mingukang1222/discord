@@ -57,7 +57,7 @@ const runAPI = async (command, message) => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${"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"}`,
+          Authorization: `Bearer ${process.env.OPENAI}`,
           "x-ratelimit-limit-requests": "400",
         },
       }
