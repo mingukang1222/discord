@@ -10,6 +10,9 @@ const { token, prefix } = require("./config.json");
 const cm = require("./commands/common.js");
 const ai = require("./commands/openai.js");
 const { searchHistory } = require("./commands/lolHistory.js");
+const { setCountChat, getChatData } = require("./commands/countChat.js");
+const { QuickDB } = require("quick.db");
+const db = new QuickDB();
 
 const client = new Client({
   intents: [
@@ -26,15 +29,12 @@ client.once(Events.ClientReady, (c) => {
 
 client.on("ready", () => {
   client.user.setActivity(`잘 못`);
-  console.log("setting");
 });
 
-client.on("messageCreate", (message) => {
-  // console.log(message);
+client.on("messageCreate", async (message) => {
   if (message.author.bot) return false;
 
-  // console.log(message);
-  // console.log(`${message.author.username}: ${message.content}`);
+  await setCountChat(message);
 
   const msg = message.content;
 
@@ -50,6 +50,8 @@ client.on("messageCreate", (message) => {
 
     console.log(mainCommand, "-", subCommand);
 
+    //message.mentions
+
     switch (mainCommand) {
       case "모대요":
         message.reply(`${message.author.globalName} ${new Date()}`);
@@ -58,7 +60,6 @@ client.on("messageCreate", (message) => {
         message.reply(`${cm.random(subCommand ?? "1~10")}`);
         break;
       case "롤":
-        console.log(subCommand);
         searchHistory(subCommand, message);
         break;
       case "예은아":
@@ -66,6 +67,17 @@ client.on("messageCreate", (message) => {
         break;
       case "테스트":
         ai.runAPI(subCommand, message);
+        break;
+      case "info":
+        ai.infoAPI(message);
+        break;
+      case "dm":
+        console.log(client.users.UserManager);
+        const channelId = message.channelId;
+        console.log(message);
+        break;
+      case "채팅":
+        getChatData(message);
         break;
     }
   }

@@ -32,6 +32,7 @@ const { ai, organization } = require("../config.json");
 /*
 
 openai api token -> heroku
+process.env.OPENAI
 
 */
 const axios = require("axios");
@@ -56,13 +57,12 @@ const runAPI = async (command, message) => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI}`,
-          "x-ratelimit-limit-requests": 400,
+          Authorization: `Bearer ${"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"}`,
+          "x-ratelimit-limit-requests": "400",
         },
       }
     )
     .then((response) => {
-      console.log(response.headers["x-ratelimit-remaining-requests"]);
       console.log(response.data.choices[0].message.content);
 
       const limit = response.headers["x-ratelimit-limit-requests"];
@@ -76,6 +76,67 @@ const runAPI = async (command, message) => {
       console.error(error);
     });
 };
+
+const infoAPI = async (message) => {
+  axios
+    .post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "user",
+            content: `정보`,
+          },
+        ],
+        max_tokens: 150,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.OPENAI}`,
+        },
+      }
+    )
+    .then((response) => {
+      console.log("response.headers", response.headers);
+      console.log("response.headers", response.headers);
+      console.log(response.data.choices[0].message.content);
+
+      const limit = response.headers["x-ratelimit-limit-requests"];
+      const current = response.headers["x-ratelimit-remaining-requests"];
+      const time = response.headers["x-ratelimit-reset-requests"];
+
+      const hisotryEmbed = {
+        color: 0xff0000,
+        title: "모대요 봇 정보",
+        fields: [
+          {
+            name: "x-ratelimit-limit-requests",
+            value: `${limit}`,
+            inline: false,
+          },
+          {
+            name: "x-ratelimit-remaining-requests",
+            value: `${current}`,
+            inline: false,
+          },
+          {
+            name: "x-ratelimit-reset-requests",
+            value: `${time}`,
+            inline: false,
+          },
+        ],
+      };
+
+      message.channel.send({ embeds: [hisotryEmbed] });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
 module.exports = {
   runAPI,
+  infoAPI,
 };
