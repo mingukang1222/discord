@@ -63,10 +63,13 @@ const runAPI = async (command, message) => {
     .then((response) => {
       console.log(response.headers["x-ratelimit-remaining-requests"]);
       console.log(response.data.choices[0].message.content);
+
+      const limit = 200;
+      const current = response.headers["x-ratelimit-remaining-requests"];
       const answer = response.data.choices[0].message.content;
       const useToken = response.data.usage.total_tokens;
 
-      message.reply(`${answer} - ${useToken}토큰 사용`);
+      message.reply(`${answer} - ${current}/${limit}`);
     })
     .catch((error) => {
       console.error(error);
