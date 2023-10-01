@@ -61,7 +61,7 @@ const runAPI = async (command, message) => {
       }
     )
     .then((response) => {
-      console.log(response);
+      console.log(response.headers["x-ratelimit-remaining-requests"]);
       console.log(response.data.choices[0].message.content);
       const answer = response.data.choices[0].message.content;
       const useToken = response.data.usage.total_tokens;
