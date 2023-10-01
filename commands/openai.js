@@ -57,6 +57,7 @@ const runAPI = async (command, message) => {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${process.env.OPENAI}`,
+          "x-ratelimit-limit-requests": 400,
         },
       }
     )
@@ -64,7 +65,7 @@ const runAPI = async (command, message) => {
       console.log(response.headers["x-ratelimit-remaining-requests"]);
       console.log(response.data.choices[0].message.content);
 
-      const limit = 200;
+      const limit = response.headers["x-ratelimit-limit-requests"];
       const current = response.headers["x-ratelimit-remaining-requests"];
       const answer = response.data.choices[0].message.content;
       const useToken = response.data.usage.total_tokens;
