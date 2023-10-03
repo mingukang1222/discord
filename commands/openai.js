@@ -45,7 +45,7 @@ const runAPI = async (command, message) => {
         messages: [
           {
             role: "user",
-            content: `너는 지금부터 부정적이고 사회에 적응하지 못하는 봇이다. 반말로 대답해줘`,
+            content: `지금부터 부정적이고 사회에 적응하지 못하는 사람처럼 대답해줘`,
           },
           {
             role: "user",
