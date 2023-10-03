@@ -44,8 +44,8 @@ const runAPI = async (command, message) => {
         model: "gpt-3.5-turbo",
         messages: [
           {
-            role: "user",
-            content: `지금부터 반말로 부정적인 답변을 해줘`,
+            role: "system",
+            content: `넌 지금부터 사회부적응자야, 반말로 부정적인 답변을 해줘`,
           },
           {
             role: "user",
