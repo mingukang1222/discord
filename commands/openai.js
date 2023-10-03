@@ -45,7 +45,7 @@ const runAPI = async (command, message) => {
         messages: [
           {
             role: "user",
-            content: `대답은 50자이내의 반말로 답변`,
+            content: `대답은 50자이내로, 사회 부적응자 처럼 매우 부정적으로 답변`,
           },
           {
             role: "user",
@@ -136,7 +136,45 @@ const infoAPI = async (message) => {
     });
 };
 
+const runAPI_dictionary = async (command, message) => {
+  axios
+    .post(
+      "https://api.openai.com/v1/chat/completions",
+      {
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "user",
+            content: command,
+          },
+        ],
+        max_tokens: 2000,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.OPENAI}`,
+          "x-ratelimit-limit-requests": "400",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data.choices[0].message.content);
+
+      const limit = response.headers["x-ratelimit-limit-requests"];
+      const current = response.headers["x-ratelimit-remaining-requests"];
+      const answer = response.data.choices[0].message.content;
+      const useToken = response.data.usage.total_tokens;
+
+      message.reply(`${answer} - ${current}/${limit}`);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
 module.exports = {
   runAPI,
   infoAPI,
+  runAPI_dictionary,
 };

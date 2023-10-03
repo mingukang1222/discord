@@ -62,6 +62,9 @@ client.on("messageCreate", async (message) => {
       case "롤":
         searchHistory(subCommand, message);
         break;
+      case "질문":
+        ai.runAPI_dictionary(subCommand, message);
+        break;
       case "예은아":
         ai.runAPI(subCommand, message);
         break;
