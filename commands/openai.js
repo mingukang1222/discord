@@ -166,7 +166,7 @@ const runAPI_dictionary = async (command, message) => {
       const answer = response.data.choices[0].message.content;
       const useToken = response.data.usage.total_tokens;
 
-      message.reply(`${answer} - ${current}/${limit}`);
+      message.reply(`${answer} - ${useToken}token`);
     })
     .catch((error) => {
       console.error(error);
